@@ -1,11 +1,73 @@
+/* ==========================================================
+   PARITY — Mobile Overrides
+   media: screen and (max-device-width: 800px)
+   ========================================================== */
+
+/* --- Nav bar compact --- */
+#nav-bar {
+  padding: 0 12px;
+  height: 48px;
+}
+
+#nav-title {
+  font-size: 1.1rem;
+  letter-spacing: 0.32em;
+}
+
+.nav-btn {
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  letter-spacing: 0.20em;
+}
+
+/* --- Layout adjustments --- */
+#container {
+  padding-top: 48px;
+}
+
 #title {
-  margin:1vh auto;
+  margin: 1vh auto;
+}
+
+#box {
+  margin-top: 1vh;
+  border-radius: 6px;
 }
 
 #board {
-  margin-top:5vh;
+  margin-top: 2vh;
 }
 
-.fb-like *, #fb-root * {
+/* --- Level select: 4 columns on mobile --- */
+#level-grid {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8vh;
+}
+
+/* --- Rules text slightly larger for touch readability --- */
+.rule-item p {
+  font-size: 1.8vh;
+}
+
+/* --- Panels & Rules modal mobile adjustments --- */
+.glass-panel,
+.game-panel {
+  padding: 3vh 2vh;
+  border-radius: 6px;
+}
+
+#rules-modal {
+  padding: 14px;
+}
+
+#rules-modal .modal-card {
+  max-width: 94vw;
+  padding: 3vh 2vh;
+  border-radius: 6px;
+}
+
+/* --- Hide social widgets on mobile --- */
+.fb-like *,
+#fb-root * {
   display: none !important;
 }

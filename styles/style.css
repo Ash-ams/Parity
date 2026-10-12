@@ -1,281 +1,699 @@
-/* style.css */
+/* ============================================================
+   PARITY — Flat Game UI Stylesheet
+   Single unified font: 'Poiret One' across everything.
+   ============================================================ */
 
-/* Begin HTML element styling */
-* {
-  color:#ccc;
-  font-family:Arial;
-  font-size:3vh;
+/* --- Design Tokens --- */
+:root {
+  /* Unified Font */
+  --font-family: 'Poiret One', cursive;
+
+  /* Palette: Solid Slate & Dark Navy */
+  --bg-main: #161d27;
+  --bg-surface: #202936;
+  --bg-cell: #283546;
+  --bg-cell-selected: #334458;
+  --bg-card: #19212c;
+
+  /* Borders */
+  --border-panel: #2d3a4d;
+  --border-cell: #1a222e;
+  --border-card: #263342;
+
+  /* Button Colors & Bottom Push Shades */
+  --btn-default-bg: #2c3e50;
+  --btn-default-shade: #1a252f;
+  --btn-default-hover: #34495e;
+
+  --btn-primary-bg: #16a085;
+  --btn-primary-shade: #0e6655;
+  --btn-primary-hover: #1abc9c;
+
+  --btn-gold-bg: #f39c12;
+  --btn-gold-shade: #c87f0a;
+  --btn-gold-hover: #f1c40f;
+
+  --btn-locked-bg: #1c2430;
+  --btn-locked-shade: #141a24;
+  --btn-locked-text: #4a5868;
+
+  /* Text Colors */
+  --text-main: #ffffff;
+  --text-sub: #8b9bb4;
+  --text-cell: #cbd5e1;
+  --text-cell-selected: #ffffff;
+  --text-accent: #f1c40f;
+
+  /* Dimensions */
+  --cell-size: 20vh;
+  --board-gap: 6px;
+  --nav-height: 54px;
+  --radius-flat: 6px;
+}
+
+/* ==========================================================
+   BASE RESET & UNIFIED TYPOGRAPHY
+   ========================================================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family);
 }
 
 html {
-  height:100%;
+  height: 100%;
 }
 
 body {
-  background-color:#333;
-  margin:0;
-  max-height:100%;
-  overflow:hidden;
-
-  /* Begin disable text-selection */
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  font-size: 16px;
+  margin: 0;
+  min-height: 100%;
+  max-height: 100%;
+  overflow: hidden;
   -webkit-user-select: none;
-  -moz-user-select: -moz-none;
+  -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  /* End disable text-selection */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 p {
-  margin:1vh;
+  margin: 1vh;
+  font-family: var(--font-family);
 }
 
 a {
-  font-family:'Poiret One', cursive;
-  text-decoration:none;
-  color:#888;
+  font-family: var(--font-family);
+  text-decoration: none;
+  color: var(--text-sub);
+  transition: color 0.15s ease;
 }
 
 a:hover {
-  color:#fff;
+  color: var(--text-accent);
 }
 
-/* End HTML element styling */
+/* ==========================================================
+   NAVIGATION BAR
+   ========================================================== */
+#nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background-color: #131922;
+  border-bottom: 2px solid var(--border-panel);
+  z-index: 100000;
+}
 
+#nav-title {
+  font-family: var(--font-family);
+  font-size: 1.8rem;
+  font-weight: normal;
+  color: var(--text-main);
+  letter-spacing: 0.38em;
+  text-transform: lowercase;
+}
 
-/* Begin IDs */
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  background-color: var(--btn-default-bg);
+  border: none;
+  border-bottom: 3px solid var(--btn-default-shade);
+  border-radius: var(--radius-flat);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: transform 0.05s ease, border-bottom-width 0.05s ease, background-color 0.1s ease;
+}
 
+.nav-btn:hover {
+  background-color: var(--btn-default-hover);
+}
+
+.nav-btn:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
+}
+
+/* ==========================================================
+   LAYOUT – Container & Box
+   ========================================================== */
 #title {
-  font-size:6vh;
-  margin-top:-1vh;
+  display: none;
+  font-family: var(--font-family);
 }
 
 #container {
-  margin:0 auto;
-  width:65vh;
+  margin: 0 auto;
+  width: 65vh;
+  padding-top: var(--nav-height);
 }
 
 #box {
-  background-color:#333;
-  overflow:hidden;
-  height:69vh;
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-flat);
+  overflow: hidden;
+  height: 69vh;
+  margin-top: 2vh;
+  border: 3px solid var(--border-panel);
 }
 
-#level {
-  font-size:3.5vh;
-}
-
-#loader {
-  height:69vh;
-  text-align:center;
-}
-
-#loader p {
-  font-family:'Poiret One', cursive;
-}
-
-#image-container {
-  position:relative;
-  top:50%;
-  -webkit-transform:translateY(-50%);
-  -ms-transform:translateY(-50%);
-  transform:translateY(-50%);
-}
-
-
-/* The Tutorial overlay that shows on Level 1 of the game */
-#introtutorial {
-  background-image:url('../images/introtutorial.png');
-  width:66vh;
-  height:59vh;
-  background-position: center center;
-  background-size:contain;
-  background-repeat:no-repeat;
-  position: fixed;
-  display:none;
-  opacity:0.5;
-}
-
-/* A giant transparent overlay for swiping. It simplifies everything */
-#swipeArea {
-  width:66vh;
-  height:59vh;
-  background-position: center center;
-  background-size:contain;
-  background-repeat:no-repeat;
-  position: fixed;
-  z-index:99999999;
-}
-
+/* ==========================================================
+   GAME BOARD
+   ========================================================== */
 #board {
-  border-spacing:0;
-  margin:0 auto;
-  display:none;
+  border-spacing: var(--board-gap);
+  border-collapse: separate;
+  margin: 0 auto;
+  display: none;
+  padding: 1vh;
 }
 
-#overlay {
-  position:relative;
-  min-height:65vh;
-/*  width:351px;
-  padding:15px; */
-  margin:0 auto;
-  text-align:center;
-  overflow: auto;
-  display:none;
-}
-
-#overlay h1 {
-  color:#bbb;
-  padding:3vh;
-  font-family:'Poiret One', cursive;
-  font-size:5vh;
-}
-
-#overlay #holder {
-  position:absolute;
-  bottom:30px;
-  left:0px;
-  width:100%;
-}
-
-#overlay p {
-  padding:10px;
-  color:#ddd;
-  font-family:'Poiret One', sans-serif;
-}
-
-#overlay button {
-	-moz-box-shadow:inset 0px 1px 0px 0px #b3b3b3;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #b3b3b3;
-	box-shadow:inset 0px 1px 0px 0px #b3b3b3;
-	background-color:#707070;
-	-webkit-border-top-left-radius:0px;
-	-moz-border-radius-topleft:0px;
-	border-top-left-radius:0px;
-	-webkit-border-top-right-radius:0px;
-	-moz-border-radius-topright:0px;
-	border-top-right-radius:0px;
-	-webkit-border-bottom-right-radius:0px;
-	-moz-border-radius-bottomright:0px;
-	border-bottom-right-radius:0px;
-	-webkit-border-bottom-left-radius:0px;
-	-moz-border-radius-bottomleft:0px;
-	border-bottom-left-radius:0px;
-	text-indent:0;
-	border:1px solid #000000;
-	display:inline-block;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:3vh;
-	font-weight:bold;
-	font-style:normal;
-	height:10vh;
-  min-width:26vh;
-	line-height:2.4vh;
-	text-decoration:none;
-	text-align:center;
-	text-shadow:1px 1px 0px #2e4d6b;
-}
-
-#overlay button:hover {
-	background-color:#3e474f;
-}
-
-#overlay button:active, .active {
-  bottom:10vh;
-}
-/* This button was generated using CSSButtonGenerator.com */
-
-#overlay #content {
-  color:#ddd;
-  font-size:4vh;
-  font-family:'Poiret One', sans-serif;
-}
-/* End IDs */
-
-/* Begin Classes */
+/* ==========================================================
+   CELLS — Unified Font
+   ========================================================== */
 .cell {
-  font-family: 'Open Sans', sans-serif;
-  font-size:6.6vh;
-  color:#555;
-  width:20vh; /* Not 120px because otherwise cells are different widths */
-  height:20vh;
-  background-color:#999;
-  padding:0;
-  border:1px solid #333;
-  box-sizing:border-box;
+  font-family: var(--font-family);
+  font-size: 7.5vh;
+  font-weight: bold;
+  color: var(--text-cell);
+  width: var(--cell-size);
+  height: var(--cell-size);
+  background-color: var(--bg-cell);
+  padding: 0;
+  border: 2px solid var(--border-cell);
+  border-radius: var(--radius-flat);
+  text-align: center;
+  vertical-align: middle;
+  transition: transform 0.1s ease-out, background-color 0.15s ease, color 0.15s ease;
 }
 
-.selected {
-  /*background-color:#444;*/
-  box-sizing:border-box;
-  font-size:6.8vh;
-  font-weight:bold;
-  color:#fff;
+.cell.selected {
+  font-size: 7.8vh;
+  font-weight: bold;
+  color: var(--text-cell-selected);
+  background-color: var(--bg-cell-selected);
+  border-color: #3e526c;
 }
 
-.selected.white {
-  color:#000;
+.cell.selected.white {
+  color: #161d27;
 }
 
-.poiret {
-  font-family: 'Poiret One', cursive;
-}
-
-.center {
-  text-align:center;
-}
-
-.light {
-  color:#ddd;
-}
-
+/* Black & white mode variants */
 .black {
-  background-color:#292929; /* one shade darker than #333 */
+  background-color: #121820;
+  color: #7b8b9e;
 }
 
 .white {
-  background-color:#ccc;
+  background-color: #d1d8e0;
+  color: #161d27;
+}
+
+/* Level / reset row at the bottom of the board table */
+#board tr:last-child td {
+  background: transparent;
+  border: none;
+  padding: 1.2vh 0.5vh;
+  border-radius: 0;
+  height: auto;
+  width: auto;
+}
+
+/* Fast, snappy transform when cell increments */
+@keyframes cellPop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.cell-pop {
+  animation: cellPop 0.12s ease-out;
+}
+
+.cell-matched {
+  color: var(--text-accent) !important;
+  border-color: var(--btn-gold-bg) !important;
+}
+
+/* ==========================================================
+   SELECTOR (Cursor) - Clean, Thick Flat Border
+   ========================================================== */
+#selector {
+  z-index: 50000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: var(--cell-size);
+  width: var(--cell-size);
+  box-sizing: border-box;
+  border: 4px solid #f1c40f;
+  border-radius: var(--radius-flat);
+  display: none;
+  pointer-events: none;
+  box-shadow: none;
+  animation: none;
+  transition: left 0.15s ease-out, top 0.15s ease-out;
+}
+
+/* ==========================================================
+   LEVEL & RESET
+   ========================================================== */
+#level {
+  font-family: var(--font-family);
+  font-size: 2.2vh;
+  letter-spacing: 0.22em;
+  text-transform: lowercase;
+  color: var(--text-sub);
+}
+
+#level:hover {
+  color: var(--text-accent);
+}
+
+#reset img {
+  width: 4.5vh !important;
+  opacity: 0.55;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  filter: brightness(1.6);
+}
+
+#reset:hover img {
+  opacity: 1;
+  transform: rotate(-60deg);
+}
+
+/* ==========================================================
+   STORY OVERLAY
+   ========================================================== */
+#overlay {
+  position: relative;
+  min-height: 65vh;
+  margin: 0 auto;
+  text-align: center;
+  overflow: auto;
+  display: none;
+  padding: 4vh 4vh;
+  background-color: var(--bg-surface);
+}
+
+#overlay h1 {
+  color: var(--text-main);
+  padding: 3vh 0;
+  font-family: var(--font-family);
+  font-size: 5vh;
+  letter-spacing: 0.08em;
+}
+
+#overlay #holder {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  width: 100%;
+}
+
+#overlay p {
+  padding: 10px;
+  color: var(--text-sub);
+  font-family: var(--font-family);
+  font-size: 2.4vh;
+  line-height: 1.6;
+}
+
+#overlay button {
+  background-color: var(--btn-primary-bg);
+  color: #ffffff;
+  font-family: var(--font-family);
+  font-size: 2.2vh;
+  font-weight: bold;
+  height: 7vh;
+  min-width: 26vh;
+  border: none;
+  border-bottom: 4px solid var(--btn-primary-shade);
+  border-radius: var(--radius-flat);
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.05s ease, border-bottom-width 0.05s ease, background-color 0.1s ease;
+}
+
+#overlay button:hover {
+  background-color: var(--btn-primary-hover);
+}
+
+#overlay button:active,
+#overlay button.active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+#overlay #content {
+  color: var(--text-sub);
+  font-size: 2.8vh;
+  font-family: var(--font-family);
+  line-height: 1.6;
+}
+
+/* ==========================================================
+   FLAT PANELS (Main Menu & Level Select)
+   ========================================================== */
+.glass-panel,
+.game-panel {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 69vh;
+  padding: 4vh 3vh;
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-flat);
+  z-index: 60000;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.glass-panel.active,
+.glass-panel[style*="display: block"],
+.game-panel.active,
+.game-panel[style*="display: block"] {
+  display: flex !important;
+}
+
+.menu-title {
+  font-family: var(--font-family);
+  font-size: 5.5vh;
+  font-weight: normal;
+  color: var(--text-main);
+  letter-spacing: 0.28em;
+  margin-bottom: 0.8vh;
+  text-transform: lowercase;
+}
+
+.menu-subtitle {
+  font-family: var(--font-family);
+  font-size: 2vh;
+  color: var(--text-sub);
+  margin-bottom: 5vh;
+  letter-spacing: 0.22em;
+  text-transform: lowercase;
+}
+
+/* ==========================================================
+   MENU BUTTONS (Tactile 2D Flat Buttons)
+   ========================================================== */
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6vh;
+  width: 100%;
+  max-width: 280px;
+  margin-top: 2vh;
+}
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.8vh 2.5vh;
+  background-color: var(--btn-default-bg);
+  border: none;
+  border-bottom: 4px solid var(--btn-default-shade);
+  border-radius: var(--radius-flat);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  font-size: 2.1vh;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: transform 0.05s ease, border-bottom-width 0.05s ease, background-color 0.1s ease;
+}
+
+.menu-btn:hover {
+  background-color: var(--btn-default-hover);
+}
+
+.menu-btn:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+.menu-btn.primary {
+  background-color: var(--btn-primary-bg);
+  color: #ffffff;
+  border-bottom: 4px solid var(--btn-primary-shade);
+}
+
+.menu-btn.primary:hover {
+  background-color: var(--btn-primary-hover);
+}
+
+.menu-btn.primary:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+/* ==========================================================
+   LEVEL SELECT GRID
+   ========================================================== */
+#level-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.2vh;
+  max-height: 42vh;
+  overflow-y: auto;
+  padding: 1.5vh 0;
+  width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-panel) transparent;
+}
+
+#level-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+#level-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#level-grid::-webkit-scrollbar-thumb {
+  background: var(--border-panel);
+  border-radius: 3px;
+}
+
+.level-btn {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--btn-default-bg);
+  border: none;
+  border-bottom: 3px solid var(--btn-default-shade);
+  border-radius: var(--radius-flat);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  font-size: 2.2vh;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.05s ease, border-bottom-width 0.05s ease, background-color 0.1s ease;
+}
+
+.level-btn:hover {
+  background-color: var(--btn-default-hover);
+}
+
+.level-btn:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
+}
+
+.level-btn.completed {
+  background-color: var(--btn-primary-bg);
+  color: #ffffff;
+  border-bottom: 3px solid var(--btn-primary-shade);
+}
+
+.level-btn.completed:hover {
+  background-color: var(--btn-primary-hover);
+}
+
+.level-btn.current {
+  background-color: var(--btn-gold-bg);
+  color: #ffffff;
+  border-bottom: 3px solid var(--btn-gold-shade);
+}
+
+.level-btn.current:hover {
+  background-color: var(--btn-gold-hover);
+}
+
+.level-btn.locked {
+  background-color: var(--btn-locked-bg);
+  color: var(--btn-locked-text);
+  border-bottom: 3px solid var(--btn-locked-shade);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ==========================================================
+   RULES MODAL
+   ========================================================== */
+#rules-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(10, 14, 20, 0.88);
+  z-index: 1000000;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#rules-modal.active,
+#rules-modal[style*="display: block"] {
+  display: flex !important;
+}
+
+#rules-modal .modal-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 440px;
+  background-color: var(--bg-surface);
+  border: 3px solid var(--border-panel);
+  border-radius: var(--radius-flat);
+  padding: 4vh 3.5vh;
+  text-align: center;
+}
+
+#rules-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6vh;
+  margin: 2.5vh 0;
+  text-align: left;
+  width: 100%;
+}
+
+.rule-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background-color: var(--bg-card);
+  border-radius: var(--radius-flat);
+  border: 2px solid var(--border-card);
+}
+
+.rule-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background-color: var(--btn-primary-bg);
+  color: #ffffff;
+  border-radius: var(--radius-flat);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.rule-item p {
+  font-family: var(--font-family);
+  font-size: 2vh;
+  color: var(--text-cell);
+  line-height: 1.5;
+  padding: 0;
+  margin: 0;
+}
+
+.rule-item strong {
+  color: var(--text-accent);
+  font-weight: bold;
+}
+
+/* ==========================================================
+   UTILITY CLASSES
+   ========================================================== */
+.poiret {
+  font-family: var(--font-family);
+}
+
+.center {
+  text-align: center;
+}
+
+.light {
+  color: var(--text-main);
 }
 
 .left {
-  text-align:left;
-  float:left;
+  text-align: left;
+  float: left;
 }
 
 .right {
-  text-align:right;
-  float:right;
+  text-align: right;
+  float: right;
 }
 
-#selector {
-  z-index:50000;
-  float: left;
-  height:20vh;
-  width:20vh;
+#loader {
+  height: 69vh;
   text-align: center;
-  position:absolute;
-  top:0;
-  left:0;
 }
 
-.dSelected {
-  border: 3px solid #227687;
-  box-sizing:border-box;
-  font-weight:bold;
-  color:#fff;
-  -moz-box-shadow: inset 0 0 10px #227687;
-  -webkit-box-shadow: inset 0 0 10px #227687;
-  box-shadow: inset 0 0 10px #227687;
-  display:none;
+#loader p {
+  font-family: var(--font-family);
+  color: var(--text-sub);
+}
+
+#image-container {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .fb-like {
-  position:absolute !important;
-  bottom:20px;
-  left:20px;
+  position: absolute !important;
+  bottom: 20px;
+  left: 20px;
 }
 
-/* Hides the "flyout" comment box when Facebook like button is clicked */
 .fb_edge_widget_with_comment span.fb_edge_comment_widget iframe.fb_ltr {
   display: none !important;
+}
+
+.adsbygoogle {
+  opacity: 0.5;
 }

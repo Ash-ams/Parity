@@ -38,6 +38,11 @@ mediator.subscribe('story_story_loaded', function() {
   mediator.publish('loader_story_loaded');
 });
 
+// Boot sequence: publish show_main_menu once saved data has finished loading
+mediator.subscribe('cookie_data_load_complete', function(saveObject) {
+  mediator.publish('show_main_menu');
+});
+
 // Start the game when the DOM is ready
 $(document).ready(function() {
   mediator.publish('loader_dom_ready'); // Notify everyone we can work now

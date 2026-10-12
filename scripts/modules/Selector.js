@@ -9,17 +9,25 @@ var Selector = (function() {
   var snapTo = function(x, y) {
     coordinates.x = x;
     coordinates.y = y;
-    selector.animate({
-      top: $('td[data-x="' + x + '"][data-y="' + y + '"]').offset().top + 'px',
-      left: $('td[data-x="' + x + '"][data-y="' + y + '"]').offset().left + 'px'
-    }, 100, function() {
-      //todo when complete
-    });
+    var targetCell = $('td[data-x="' + x + '"][data-y="' + y + '"]');
+    if (targetCell.length) {
+      var offset = targetCell.offset();
+      selector.css({
+        top: offset.top + 'px',
+        left: offset.left + 'px'
+      });
+    }
   };
 
   var resnap = function() {
-    selector.css('top', $('td[data-x="' + coordinates.x + '"][data-y="' + coordinates.y + '"]').offset().top + 'px');
-    selector.css('left', $('td[data-x="' + coordinates.x + '"][data-y="' + coordinates.y + '"]').offset().left + 'px');
+    var targetCell = $('td[data-x="' + coordinates.x + '"][data-y="' + coordinates.y + '"]');
+    if (targetCell.length) {
+      var offset = targetCell.offset();
+      selector.css({
+        top: offset.top + 'px',
+        left: offset.left + 'px'
+      });
+    }
   };
 
   var fadeIn = function() {

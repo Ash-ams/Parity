@@ -1,7 +1,8 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>parity</title>
+    <title>Parity — Numbers Puzzle Game</title>
+    <meta charset="utf-8">
     <!-- Begin Facebook Metadata -->
 
     <meta property="fb:app_id" content="916448168386651" />
@@ -13,13 +14,13 @@
     <meta name="description" content="An addicting numbers puzzle game.">
 
     <!-- End Facebook Metadata -->
-    <script src="scripts/production.min.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=Poiret+One|Open+Sans' rel='stylesheet' type='text/css'>
-    <link href="styles/style.css" rel="stylesheet" type="text/css" />
-    <link href="styles/mobile.css" rel="stylesheet" type="text/css" media="screen and (max-device-width:800px)" />
+    <script src="scripts/production.min.js?v=7"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
+    <link href="styles/style.css?v=7" rel="stylesheet" type="text/css" />
+    <link href="styles/mobile.css?v=7" rel="stylesheet" type="text/css" media="screen and (max-device-width:800px)" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <meta name="viewport" content="initial-scale=1.0" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
   </head>
   <body>
@@ -54,9 +55,63 @@
     </script>
     <!-- End Facebook SDK -->
 
+    <!-- ============ Navigation Bar ============ -->
+    <nav id="nav-bar">
+      <button id="nav-menu-btn" class="nav-btn" aria-label="Main Menu">MENU</button>
+      <span id="nav-title">parity</span>
+      <button id="nav-rules-btn" class="nav-btn" aria-label="Game Rules">RULES</button>
+    </nav>
+
     <div id="container">
       <p id="title" class="light poiret center">parity</p>
       <div id="box">
+
+        <!-- ============ Main Menu ============ -->
+        <div id="main-menu" class="glass-panel game-panel">
+          <h1 class="menu-title">parity</h1>
+          <p class="menu-subtitle">a numbers puzzle game</p>
+          <div class="menu-buttons">
+            <button id="menu-play-btn" class="menu-btn primary">PLAY</button>
+            <button id="menu-levels-btn" class="menu-btn">LEVEL SELECT</button>
+          </div>
+        </div>
+
+        <!-- ============ Level Select ============ -->
+        <div id="level-select" class="glass-panel game-panel">
+          <h1 class="menu-title">select level</h1>
+          <div id="level-grid">
+            <!-- Populated dynamically by Overlay.js -->
+          </div>
+          <div class="menu-buttons" style="margin-top:2vh;">
+            <button id="levels-back-btn" class="menu-btn">BACK</button>
+          </div>
+        </div>
+
+        <!-- ============ Rules Modal ============ -->
+        <div id="rules-modal">
+          <div class="modal-card">
+            <h1 class="menu-title">how to play</h1>
+            <div id="rules-content">
+              <div class="rule-item">
+                <span class="rule-badge">1</span>
+                <p>Move the cursor using <strong>arrow keys</strong> or <strong>swipe</strong> on mobile.</p>
+              </div>
+              <div class="rule-item">
+                <span class="rule-badge">2</span>
+                <p>Each time you move, the number in the cell you <strong>leave</strong> increases by one.</p>
+              </div>
+              <div class="rule-item">
+                <span class="rule-badge">3</span>
+                <p>Make every number on the board <strong>equal</strong> to win the level!</p>
+              </div>
+            </div>
+            <div class="menu-buttons">
+              <button id="rules-close-btn" class="menu-btn primary">GOT IT</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ EXISTING: Story Overlay (PRESERVED EXACTLY) ============ -->
         <div id="overlay">
           <h1></h1>
           <div id="content"></div>

@@ -109,12 +109,17 @@ var Board = (function() {
   // Selects a cell and modifies it's value if necessary
   function select(x, y) {
     var sel = level.selected;
-    if(cells[sel.x][sel.y].hasClass('black')) {
+    var $prev = cells[sel.x][sel.y];
+    if($prev.hasClass('black')) {
       cell(sel.x, sel.y, cell(sel.x, sel.y)-1);
     }
     else {
       cell(sel.x, sel.y, cell(sel.x, sel.y)+1);
     }
+    $prev.removeClass('cell-pop');
+    if ($prev[0]) { void $prev[0].offsetWidth; }
+    $prev.addClass('cell-pop');
+
     // Move the selector
     mediator.publish('selector_snap_to', x, y);
 
@@ -257,7 +262,7 @@ mediator.installTo(Board);
 Board.subscribe('board_render', Board.render);
 
 // Listen to be told when to deactivate the view
-Board.subscribe('board_set_inactive', Board.setNumLevels);
+Board.subscribe('board_set_inactive', Board.setInactive);
 
 // Listen to the keyboard so the selector can be moved
 Board.subscribe('controls_key_down', Board.down);

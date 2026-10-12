@@ -19,6 +19,33 @@ Mobile
 
 Parity is mobile-friendly. Simply visit the website on your device's browser to play. It's recommended that you add the page to your home screen if you own an iPhone for a better experience.
 
+Deploying to Netlify
+=====================
+
+This project is pre-configured for instant zero-configuration deployment to [Netlify](https://www.netlify.com/):
+
+### Option 1: Git Integration (Recommended)
+1. Push this repository to GitHub, GitLab, or Bitbucket.
+2. Log in to [Netlify](https://app.netlify.com/) and click **"Add new site" > "Import an existing project"**.
+3. Select your repository. Netlify will automatically detect the [`netlify.toml`](file:///c:/MINE/PROJECTS/GD%20Parity/netlify.toml) file:
+   - **Build command**: `npm run build`
+   - **Publish directory**: `.`
+4. Click **"Deploy site"**.
+
+### Option 2: Netlify CLI
+1. Install or run Netlify CLI:
+   ```bash
+   npx netlify deploy --prod
+   ```
+2. Follow the on-screen prompts to link your site and deploy.
+
+### Local Development & Build
+To build the production scripts locally:
+```bash
+npm run build
+```
+
 License
 =======
 Parity is licensed under the [MIT license.](https://github.com/abejfehr/parity/blob/master/LICENSE.txt)
+

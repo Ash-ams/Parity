@@ -1,12 +1,10 @@
-
 application_design.md
-
 daily_tasks.md
-
 *.csv
-
 *.xlsx
-
 node_modules
-
 *.zip
+.netlify
+.kilo
+.DS_Store
+Thumbs.db

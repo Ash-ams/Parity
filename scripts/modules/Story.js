@@ -43,8 +43,8 @@ var Story = (function() {
       mediator.publish('board_render', story[bookmark]);
       if(saveObject.played_levels.indexOf(story[bookmark].number) < 0) {
         saveObject.played_levels.push(story[bookmark].number);
-        saveObject.last_level = story[bookmark].number;
       }
+      saveObject.last_level = story[bookmark].number;
       mediator.publish('cookie_data_save', saveObject);
     }
   };
@@ -93,12 +93,38 @@ var Story = (function() {
     }
   };
 
+  // Jumps to a specific level by story index or level number
+  var goToLevel = function(n) {
+    var targetIndex = -1;
+
+    // First search by level number
+    for (var i = 0; i < story.length; ++i) {
+      if (story[i].type === 'level' && story[i].number == n) {
+        targetIndex = i;
+        break;
+      }
+    }
+
+    // Fall back to checking if n is a direct story array index pointing to a level
+    if (targetIndex === -1 && typeof story[n] !== 'undefined' && story[n].type === 'level') {
+      targetIndex = n;
+    }
+
+    if (targetIndex >= 0) {
+      if (!saveObject) {
+        saveObject = { played_levels: [], visited_instructions: [], last_level: -1 };
+      }
+      setBookmark(targetIndex);
+    }
+  };
+
   // The publicly visible methods are available by this facade
   return {
     getStory: getStory,
     setBookmark: setBookmark,
     setBookmarkAtLevel: setBookmarkAtLevel,
     advance: advance,
+    goToLevel: goToLevel
   };
 }());
 
@@ -110,7 +136,12 @@ mediator.installTo(Story);
 // Get the story, advance it, and set the bookmark when told
 mediator.subscribe('story_get_story', Story.getStory);
 mediator.subscribe('story_set_bookmark_at_level', Story.setBookmarkAtLevel);
+mediator.subscribe('cookie_data_load_complete', function(so) {
+  if (so) saveObject = so;
+});
 mediator.subscribe('story_advance', Story.advance);
+mediator.subscribe('go_to_level', Story.goToLevel);
+mediator.subscribe('story_go_to_level', Story.goToLevel);
 
 // Advance the story when notified that the current level has been completed
 mediator.subscribe('board_level_complete', Story.advance);
